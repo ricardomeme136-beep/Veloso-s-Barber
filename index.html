@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veloso's Barber - Barbearia de Excelência</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9A961;
+            --dark: #0D0D0D;
+            --darker: #000000;
+            --gray: #1A1A1A;
+            --light-gray: #999999;
+            --cream: #F5F1E8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        nav {
+            display: flex;
+            gap: 50px;
+        }
+
+        .nav-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.4s ease;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--gold);
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            display: none;
+            min-height: 100vh;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        .section-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 140px 60px 100px;
+        }
+
+        /* Home */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+            min-height: calc(100vh - 240px);
+        }
+
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5.5rem;
+            font-weight: 300;
+            line-height: 1.1;
+            color: var(--cream);
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content h1 span {
+            display: block;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            color: var(--light-gray);
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 500px;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            font-weight: 400;
+        }
+
+        .cta-button:hover {
+            background: var(--gold);
+            color: var(--darker);
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 650px;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.05) 0%, transparent 100%);
+            border: 1px solid rgba(201, 169, 97, 0.15);
+        }
+
+        /* Services */
+        .services-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .services-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .services-header p {
+            font-size: 1rem;
+            color: var(--light-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .services-list {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-row {
+            display: grid;
+            grid-template-columns: 2fr 3fr 1fr 1fr;
+            gap: 40px;
+            padding: 50px 0;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-row:hover {
+            padding-left: 20px;
+            border-bottom-color: var(--gold);
+        }
+
+        .service-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: rgba(201, 169, 97, 0.3);
+            font-weight: 300;
+        }
+
+        .service-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--cream);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .service-info p {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .service-duration {
+            font-size: 0.85rem;
+            color: var(--light-gray);
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .service-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: 400;
+            text-align: right;
+        }
+
+        /* Booking */
+        .booking-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .booking-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .booking-header p {
+            color: var(--light-gray);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .booking-form {
+            background: var(--dark);
+            padding: 70px;
+            border: 1px solid rgba(201, 169, 97, 0.15);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .form-field {
+            margin-bottom: 40px;
+        }
+
+        .form-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-field label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            background: var(--darker);
+            border: none;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+            padding: 15px 0;
+            color: var(--cream);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus {
+            outline: none;
+            border-bottom-color: var(--gold);
+        }
+
+        .form-field select option {
+            background: var(--darker);
+            color: var(--cream);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 400;
+        }
+
+        .submit-btn:hover {
+            background: var(--gold);
+            color: var(--darker);
+        }
+
+        .confirmation {
+            display: none;
+            text-align: center;
+            background: var(--dark);
+            padding: 80px 70px;
+            border: 1px solid rgba(201, 169, 97, 0.15);
+        }
+
+        .confirmation.active {
+            display: block;
+        }
+
+        .confirmation h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .confirmation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .confirmation-item {
+            text-align: left;
+            padding: 30px;
+            background: var(--darker);
+            border: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .confirmation-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--light-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .confirmation-item strong {
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        /* Barbers */
+        .barbers-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .barbers-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .barbers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .barber {
+            text-align: center;
+        }
+
+        .barber-photo {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.1) 0%, transparent 100%);
+            border: 1px solid rgba(201, 169, 97, 0.15);
+            margin-bottom: 40px;
+        }
+
+        .barber h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .barber p {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .barber-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .stat span {
+            display: block;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+            font-weight: 300;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--light-gray);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Gallery */
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .gallery-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            margin-bottom: 100px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: var(--dark);
+            border: 1px solid rgba(201, 169, 97, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: var(--gold);
+        }
+
+        .social-section {
+            text-align: center;
+            padding: 80px 0;
+            border-top: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .social-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--gold);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            color: var(--darker);
+        }
+
+        /* Contact */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .contact-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--cream);
+            margin-bottom: 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: var(--dark);
+            padding: 60px;
+            border: 1px solid rgba(201, 169, 97, 0.15);
+        }
+
+        .contact-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .info-block {
+            margin-bottom: 50px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(201, 169, 97, 0.1);
+        }
+
+        .info-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-block label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .info-block p {
+            font-size: 1rem;
+            color: var(--light-gray);
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .map-button {
+            margin-top: 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker);
+            border-top: 1px solid rgba(201, 169, 97, 0.1);
+            padding: 80px 60px 40px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .footer-text {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--darker);
+        }
+
+        .copyright {
+            color: var(--light-gray);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(201, 169, 97, 0.1);
+            font-weight: 300;
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+
+            .service-row {
+                grid-template-columns: 1fr 2fr 1fr;
+                gap: 20px;
+            }
+
+            .service-number {
+                display: none;
+            }
+
+            .barbers-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .confirmation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                padding: 20px 30px;
+            }
+
+            nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-link {
+                font-size: 0.75rem;
+            }
+
+            .section-wrapper {
+                padding: 120px 30px 60px;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .services-header h2,
+            .booking-header h2,
+            .barbers-header h2,
+            .gallery-header h2,
+            .contact-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .booking-form,
+            .contact-info {
+                padding: 40px 30px;
+            }
+
+            .service-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .service-price {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="logo">VELOSO'S</div>
+            <nav>
+                <a href="#" class="nav-link active" data-section="home">Início</a>
+                <a href="#" class="nav-link" data-section="services">Serviços</a>
+                <a href="#" class="nav-link" data-section="booking">Reserva</a>
+                <a href="#" class="nav-link" data-section="barbers">Equipa</a>
+                <a href="#" class="nav-link" data-section="gallery">Galeria</a>
+                <a href="#" class="nav-link" data-section="contact">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="active">
+        <div class="section-wrapper">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>
+                        A Arte da
+                        <span>Barbearia Clássica</span>
+                    </h1>
+                    <p>Experiência premium onde cada corte é executado com precisão artesanal. Tradição, elegância e excelência definem o nosso trabalho.</p>
+                    <a href="#" class="cta-button" data-section="booking">Marcar Consulta</a>
+                </div>
+                <div class="hero-visual"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-wrapper">
+            <div class="services-header">
+                <h2>Serviços</h2>
+                <p>Cada serviço é executado com técnicas tradicionais e produtos premium para garantir resultados excepcionais.</p>
+            </div>
+            <div class="services-list">
+                <div class="service-row">
+                    <div class="service-number">01</div>
+                    <div class="service-info">
+                        <h3>Corte Clássico</h3>
+                        <p>Corte tradicional executado com tesoura e navalha</p>
+                    </div>
+                    <div class="service-duration">30 min</div>
+                    <div class="service-price">25€</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">02</div>
+                    <div class="service-info">
+                        <h3>Corte & Barba</h3>
+                        <p>Serviço completo com corte premium e aparação de barba</p>
+                    </div>
+                    <div class="service-duration">45 min</div>
+                    <div class="service-price">35€</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">03</div>
+                    <div class="service-info">
+                        <h3>Barba Tradicional</h3>
+                        <p>Aparação e modelagem com toalhas quentes</p>
+                    </div>
+                    <div class="service-duration">30 min</div>
+                    <div class="service-price">20€</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">04</div>
+                    <div class="service-info">
+                        <h3>Corte Degradê</h3>
+                        <p>Técnica moderna executada com precisão milimétrica</p>
+                    </div>
+                    <div class="service-duration">40 min</div>
+                    <div class="service-price">30€</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">05</div>
+                    <div class="service-info">
+                        <h3>Tratamento Capilar</h3>
+                        <p>Tratamento completo para revitalização capilar</p>
+                    </div>
+                    <div class="service-duration">60 min</div>
+                    <div class="service-price">40€</div>
+                </div>
+                <div class="service-row">
+                    <div class="service-number">06</div>
+                    <div class="service-info">
+                        <h3>Corte Infantil</h3>
+                        <p>Especializado para crianças em ambiente profissional</p>
+                    </div>
+                    <div class="service-duration">25 min</div>
+                    <div class="service-price">20€</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking">
+        <div class="section-wrapper">
+            <div class="booking-header">
+                <h2>Reserva</h2>
+                <p>Agende o seu horário</p>
+            </div>
+            <div class="booking-container">
+                <div id="booking-form" class="booking-form">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Barbeiro</label>
+                            <select id="barber" required>
+                                <option value="">Selecione</option>
+                                <option value="Meireles">Meireles</option>
+                                <option value="Veloso">Veloso</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Serviço</label>
+                            <select id="service" required>
+                                <option value="">Selecione</option>
+                                <option value="Corte Clássico">Corte Clássico - 25€</option>
+                                <option value="Corte & Barba">Corte & Barba - 35€</option>
+                                <option value="Barba Tradicional">Barba Tradicional - 20€</option>
+                                <option value="Corte Degradê">Corte Degradê - 30€</option>
+                                <option value="Tratamento Capilar">Tratamento Capilar - 40€</option>
+                                <option value="Corte Infantil">Corte Infantil - 20€</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Data</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Horário</label>
+                            <select id="time" required>
+                                <option value="">Selecione</option>
+                                <option value="09:00">09:00</option>
+                                <option value="09:30">09:30</option>
+                                <option value="10:00">10:00</option>
+                                <option value="10:30">10:30</option>
+                                <option value="11:00">11:00</option>
+                                <option value="11:30">11:30</option>
+                                <option value="14:00">14:00</option>
+                                <option value="14:30">14:30</option>
+                                <option value="15:00">15:00</option>
+                                <option value="15:30">15:30</option>
+                                <option value="16:00">16:00</option>
+                                <option value="16:30">16:30</option>
+                                <option value="17:00">17:00</option>
+                                <option value="17:30">17:30</option>
+                                <option value="18:00">18:00</option>
+                                <option value="18:30">18:30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-field full">
+                        <label>Nome Completo</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Telefone</label>
+                            <input type="tel" id="phone" placeholder="+351" required>
+                        </div>
+                        <div class="form-field">
+                            <label>Email (opcional)</label>
+                            <input type="email" id="email">
+                        </div>
+                    </div>
+                    <button class="submit-btn" onclick
+                    <function_calls>
+<invoke name="artifacts">
+<parameter name="command">update</parameter>
+<parameter name="id">veloso_barber_html</parameter>
+<parameter name="old_str">                    <button class="submit-btn" onclick</parameter>
+<parameter name="new_str">                    <button class="submit-btn" onclick="submitBooking()">Confirmar Reserva</button>
+</div>
+            <div id="confirmation" class="confirmation">
+                <h3>Reserva Confirmada</h3>
+                <div class="confirmation-grid">
+                    <div class="confirmation-item">
+                        <span>Barbeiro</span>
+                        <strong id="conf-barber"></strong>
+                    </div>
+                    <div class="confirmation-item">
+                        <span>Serviço</span>
+                        <strong id="conf-service"></strong>
+                    </div>
+                    <div class="confirmation-item">
+                        <span>Data</span>
+                        <strong id="conf-date"></strong>
+                    </div>
+                    <div class="confirmation-item">
+                        <span>Horário</span>
+                        <strong id="conf-time"></strong>
+                    </div>
+                </div>
+                <p style="color: var(--light-gray); margin-top: 40px; font-weight: 300;">Receberá uma confirmação por SMS e email</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="barbers">
+    <div class="section-wrapper">
+        <div class="barbers-header">
+            <h2>Equipa</h2>
+        </div>
+        <div class="barbers-grid">
+            <div class="barber">
+                <div class="barber-photo"></div>
+                <h3>Meireles</h3>
+                <p>Especialista em cortes clássicos e modernos</p>
+                <div class="barber-stats">
+                    <div class="stat">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">Anos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">2K+</span>
+                        <span class="stat-label">Clientes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="barber">
+                <div class="barber-photo"></div>
+                <h3>Veloso</h3>
+                <p>Mestre em barbas e degradês</p>
+                <div class="barber-stats">
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Anos</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">2.5K+</span>
+                        <span class="stat-label">Clientes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <div class="section-wrapper">
+        <div class="gallery-header">
+            <h2>Portfólio</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+        <div class="social-section">
+            <h3>Siga-nos</h3>
+            <div class="social-links">
+                <a href="#" class="social-link">IG</a>
+                <a href="#" class="social-link">FB</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="section-wrapper">
+        <div class="contact-header">
+            <h2>Contacto</h2>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Informações</h3>
+                <div class="info-block">
+                    <label>Morada</label>
+                    <p>Rua da Barbearia, 123<br>4400-000 Vila Nova de Gaia<br>Porto, Portugal</p>
+                </div>
+                <div class="info-block">
+                    <label>Telefone</label>
+                    <p>+351 123 456 789</p>
+                </div>
+                <div class="info-block">
+                    <label>Email</label>
+                    <p>contato@velosobarber.pt</p>
+                </div>
+                <div class="info-block">
+                    <label>Horário</label>
+                    <p>Segunda a Sexta: 09:00 - 19:00<br>Sábado: 09:00 - 18:00<br>Domingo: Encerrado</p>
+                </div>
+                <a href="https://maps.google.com" target="_blank" class="cta-button map-button">Ver Localização</a>
+            </div>
+            <div class="contact-info">
+                <h3>Enviar Mensagem</h3>
+                <div class="form-field">
+                    <label>Nome</label>
+                    <input type="text" id="contact-name">
+                </div>
+                <div class="form-field">
+                    <label>Email</label>
+                    <input type="email" id="contact-email">
+                </div>
+                <div class="form-field">
+                    <label>Mensagem</label>
+                    <input type="text" id="contact-message" style="padding-bottom: 60px;">
+                </div>
+                <button class="submit-btn" onclick="alert('Mensagem enviada')">Enviar</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-logo">VELOSO'S</div>
+    <p class="footer-text">Excelência em Barbearia desde 2020</p>
+    <div class="footer-social">
+        <a href="#">IG</a>
+        <a href="#">FB</a>
+    </div>
+    <p class="copyright">© 2026 Veloso's Barber · Todos os direitos reservados</p>
+</footer>
+
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+
+    document.querySelectorAll('.nav-link, [data-section]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute('data-section');
+            
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll(`.nav-link[data-section="${sectionId}"]`).forEach(l => l.classList.add('active'));
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    function submitBooking() {
+        const barber = document.getElementById('barber').value;
+        const service = document.getElementById('service').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+
+        if (!barber || !service || !date || !time || !name || !phone) {
+            alert('Por favor, preencha todos os campos obrigatórios');
+            return;
+        }
+
+        document.getElementById('conf-barber').textContent = barber;
+        document.getElementById('conf-service').textContent = service;
+        document.getElementById('conf-date').textContent = new Date(date + 'T00:00:00').toLocaleDateString('pt-PT', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        document.getElementById('conf-time').textContent = time;
+
+        document.getElementById('booking-form').style.display = 'none';
+        document.getElementById('confirmation').classList.add('active');
+
+        setTimeout(() => {
+            document.getElementById('booking-form').style.display = 'block';
+            document.getElementById('confirmation').classList.remove('active');
+            
+            document.getElementById('barber').value = '';
+            document.getElementById('service').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('time').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('email').value = '';
+        }, 5000);
+    }
+</script>
+</body>
+</html></parameter>
